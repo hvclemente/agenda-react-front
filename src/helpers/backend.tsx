@@ -79,6 +79,16 @@ export function signInEndpoint(
   }).then(handleResponse);
 }
 
+export function signOutEndpoint(): Promise<IUser> {
+  return fetch(`http://localhost:8080/auth/logout`, {
+    credentials: 'include',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(handleResponse);
+}
+
 function handleResponse(resp: Response) {
   if (resp.ok) {
     return resp.json();

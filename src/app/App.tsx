@@ -23,7 +23,12 @@ function App() {
     return (
       <Router>
         <Routes>
-          <Route path='/calendar/:month' element={<CalendarScreen />} />
+          <Route
+            path='/calendar/:month'
+            element={
+              <CalendarScreen user={user} onSignOut={() => setUser(null)} />
+            }
+          />
           <Route
             path='/'
             element={
