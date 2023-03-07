@@ -9,20 +9,17 @@ import {
 } from 'react-router-dom';
 import { getToday } from '../helpers/dateFunctions';
 import { useEffect, useState } from 'react';
-import { getUserEndpoint } from '../helpers/backend';
+import { getUserEndpoint, IUser } from '../helpers/backend';
 
 function App() {
   const month = getToday().substring(0, 7);
-  const [hasSession, setHasSession] = useState(false);
+  const [user, setUser] = useState<IUser | null>(null);
 
   useEffect(() => {
-    getUserEndpoint().then(
-      () => setHasSession(true),
-      () => setHasSession(false)
-    );
+    getUserEndpoint().then(setUser, () => setUser(null));
   }, []);
 
-  if (hasSession) {
+  if (user) {
     return (
       <Router>
         <Routes>
@@ -37,7 +34,7 @@ function App() {
       </Router>
     );
   } else {
-    return <LoginScreen />;
+    return <LoginScreen onSignIn={setUser} />;
   }
 }
 

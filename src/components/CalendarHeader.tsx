@@ -1,6 +1,7 @@
-import { Box, Icon, IconButton, Avatar } from '@mui/material';
+import { Box, Icon, IconButton } from '@mui/material';
 import { formatMonth, addMonths } from '../helpers/dateFunctions';
 import { Link } from 'react-router-dom';
+import UserMenu from './UserMenu';
 
 export default function CalendarHeader(props: { month: string }) {
   const { month } = props;
@@ -29,11 +30,7 @@ export default function CalendarHeader(props: { month: string }) {
       <Box flex='1' component='h3' marginLeft='16px'>
         {month && formatMonth(month)}
       </Box>
-      <IconButton aria-label='Avatar do usuário'>
-        <Avatar>
-          <Icon>person</Icon>
-        </Avatar>
-      </IconButton>
+      <UserMenu />
     </Box>
   );
 }

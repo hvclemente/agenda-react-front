@@ -12,7 +12,7 @@ import Select from '@mui/material/Select';
 import {
   ICalendar,
   createEventEndpoint,
-  deleEvent,
+  deleteEvent,
   updateEventEndpoint,
 } from '../helpers/backend';
 import { useEffect, useRef, useState } from 'react';
@@ -82,9 +82,9 @@ export default function EventFormDialog(props: IEventFormDialogProps) {
     }
   }
 
-  function deleteEvent() {
+  function deletingEvent() {
     if (event) {
-      deleEvent(event.id!).then(props.onSave);
+      deleteEvent(event.id!).then(props.onSave);
     }
   }
 
@@ -156,7 +156,7 @@ export default function EventFormDialog(props: IEventFormDialogProps) {
           </DialogContent>
           <DialogActions>
             {!isNew && (
-              <Button type='button' onClick={deleteEvent}>
+              <Button type='button' onClick={deletingEvent}>
                 Excluir
               </Button>
             )}
