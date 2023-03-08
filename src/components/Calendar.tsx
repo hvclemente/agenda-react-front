@@ -7,6 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { ICalendarCell } from './CalendarScreen';
 import { IEvent } from '../helpers/backend';
+import { getToday } from '../helpers/dateFunctions';
 
 const DAYS_OF_WEEK = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB'];
 
@@ -23,6 +24,16 @@ const tableStyles = {
     },
   },
   dayOfMonth: {
+    fontWeight: '500',
+    marginBottom: '4px',
+  },
+  today: {
+    backgroundColor: '#3f51b5',
+    color: 'white',
+    borderRadius: '50%',
+    display: 'inline-block',
+    width: '24px',
+    lineHeight: '24px',
     fontWeight: '500',
     marginBottom: '4px',
   },
@@ -75,12 +86,24 @@ export default function Calendar(props: ICalendarProps) {
                   key={cell.date}
                   onClick={(mouseevt) => handleClick(mouseevt, cell.date)}
                 >
-                  <div style={tableStyles.dayOfMonth}>{cell.dayOfMonth}</div>
+                  <div
+                    style={
+                      cell.date === getToday()
+                        ? tableStyles.today
+                        : tableStyles.dayOfMonth
+                    }
+                  >
+                    {cell.dayOfMonth}
+                  </div>
 
                   {cell.events.map((event) => {
                     const color = event.calendar.color;
                     return (
-                      <button key={event.id} style={tableStyles.eventStyle} onClick={() => onClickEvent(event)}>
+                      <button
+                        key={event.id}
+                        style={tableStyles.eventStyle}
+                        onClick={() => onClickEvent(event)}
+                      >
                         {event.time && (
                           <>
                             <Icon fontSize='inherit' style={{ color }}>
