@@ -1,5 +1,8 @@
 export function getToday(): string {
-  return '2021-06-17';
+  const date = new Date();
+  return `${date.getFullYear()}-${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
 }
 
 export function formatMonth(isoMonth: string): string {
