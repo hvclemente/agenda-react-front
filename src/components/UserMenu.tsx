@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { IconButton, Avatar, Icon, Menu, MenuItem } from '@mui/material';
 import { signOutEndpoint } from '../helpers/backend';
-import { signOutContext, userContext } from '../helpers/authContext';
+import { authContext } from '../helpers/authContext';
 
 const userMenuStyling = {
   padding: '16px',
@@ -14,8 +14,7 @@ const userMenuStyling = {
 };
 
 export default function UserMenu() {
-  const user = useContext(userContext);
-  const onSignOut = useContext(signOutContext)
+  const {user, onSignOut} = useContext(authContext);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);

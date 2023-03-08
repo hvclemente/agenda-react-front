@@ -10,7 +10,7 @@ import {
 import { getToday } from '../helpers/dateFunctions';
 import { useEffect, useState } from 'react';
 import { getUserEndpoint, IUser } from '../helpers/backend';
-import { userContext, signOutContext } from '../helpers/authContext';
+import { authContext } from '../helpers/authContext';
 
 function App() {
   const month = getToday().substring(0, 7);
@@ -20,28 +20,25 @@ function App() {
     getUserEndpoint().then(setUser, () => setUser(null));
   }, []);
 
+  function onSignOut() {
+    setUser(null);
+  }
+
   if (user) {
     return (
-      <userContext.Provider value={user}>
-        <signOutContext.Provider value={() => setUser(null)}>
-      <Router>
-        <Routes>
-          <Route
-            path='/calendar/:month'
-            element={
-              <CalendarScreen />
-            }
-          />
-          <Route
-            path='/'
-            element={
-              <Navigate replace to={{ pathname: '/calendar/' + month }} />
-            }
-          />
-        </Routes>
-      </Router>
-      </signOutContext.Provider>
-      </userContext.Provider>
+      <authContext.Provider value={{ user, onSignOut }}>
+        <Router>
+          <Routes>
+            <Route path='/calendar/:month' element={<CalendarScreen />} />
+            <Route
+              path='/'
+              element={
+                <Navigate replace to={{ pathname: '/calendar/' + month }} />
+              }
+            />
+          </Routes>
+        </Router>
+      </authContext.Provider>
     );
   } else {
     return <LoginScreen onSignIn={setUser} />;
