@@ -10,6 +10,7 @@ import {
 import { getToday } from '../helpers/dateFunctions';
 import { useEffect, useState } from 'react';
 import { getUserEndpoint, IUser } from '../helpers/backend';
+import { userContext, signOutContext } from '../helpers/authContext';
 
 function App() {
   const month = getToday().substring(0, 7);
@@ -21,12 +22,14 @@ function App() {
 
   if (user) {
     return (
+      <userContext.Provider value={user}>
+        <signOutContext.Provider value={() => setUser(null)}>
       <Router>
         <Routes>
           <Route
             path='/calendar/:month'
             element={
-              <CalendarScreen user={user} onSignOut={() => setUser(null)} />
+              <CalendarScreen />
             }
           />
           <Route
@@ -37,6 +40,8 @@ function App() {
           />
         </Routes>
       </Router>
+      </signOutContext.Provider>
+      </userContext.Provider>
     );
   } else {
     return <LoginScreen onSignIn={setUser} />;

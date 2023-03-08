@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { IconButton, Avatar, Icon, Menu, MenuItem } from '@mui/material';
-import { IUser, signOutEndpoint } from '../helpers/backend';
+import { signOutEndpoint } from '../helpers/backend';
+import { signOutContext, userContext } from '../helpers/authContext';
 
 const userMenuStyling = {
   padding: '16px',
@@ -12,12 +13,10 @@ const userMenuStyling = {
   marginBottom: '8px',
 };
 
-interface IUserMenuProps {
-  onSignOut: () => void;
-  user: IUser;
-}
+export default function UserMenu() {
+  const user = useContext(userContext);
+  const onSignOut = useContext(signOutContext)
 
-export default function UserMenu(props: IUserMenuProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -29,7 +28,7 @@ export default function UserMenu(props: IUserMenuProps) {
 
   function signOut() {
     signOutEndpoint();
-    props.onSignOut();
+    onSignOut();
   }
 
   return (
@@ -59,8 +58,8 @@ export default function UserMenu(props: IUserMenuProps) {
           <Avatar>
             <Icon>person</Icon>
           </Avatar>
-          <div>{props.user.name}</div>
-          <small>{props.user.email}</small>
+          <div>{user.name}</div>
+          <small>{user.email}</small>
         </div>
         <MenuItem onClick={signOut}>Sair</MenuItem>
       </Menu>

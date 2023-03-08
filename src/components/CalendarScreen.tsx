@@ -5,7 +5,6 @@ import {
   IEvent,
   ICalendar,
   getCalendarsEndpoint,
-  IUser,
 } from '../helpers/backend';
 import { useParams } from 'react-router-dom';
 import CalendarsView from './CalendarsView';
@@ -69,12 +68,7 @@ function generateCalendar(
   return weeks;
 }
 
-interface ICalendarScreen {
-  onSignOut: () => void;
-  user: IUser;
-}
-
-export default function CalendarScreen(props: ICalendarScreen) {
+export default function CalendarScreen() {
   const { month } = useParams<{ month: string }>();
 
   const [calendars, setCalendars] = useState<ICalendar[]>([]);
@@ -143,7 +137,7 @@ export default function CalendarScreen(props: ICalendarScreen) {
       </Box>
 
       <Box display='flex' flex='1' flexDirection='column'>
-        {month && <CalendarHeader month={month} user={props.user} onSignOut={props.onSignOut} />}
+        {month && <CalendarHeader month={month} />}
 
         <Calendar
           weeks={weeks}
